@@ -15,7 +15,3 @@ Kakaotalk Chatbot 만들기 프로젝트.
 
 - 개발 언어: nodejs / express(웹프레임워크)
 
-
-
-
-
