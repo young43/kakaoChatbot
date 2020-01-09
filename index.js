@@ -123,7 +123,7 @@ apiRouter.post('/question_payment', function(req, res) {
 
         data = new kakaoEmbed();
         data.addBasicCard()
-            .setCardTitle(tmp)
+            .setCardDescription(tmp)
             .addCardButton('문의 전화 하기', { action: 'phone', phoneNumber: '1800-3772' });
 
         result = data.output();
@@ -176,12 +176,12 @@ apiRouter.post('/question_receipt', function(req, res) {
 
     switch(context){
       case "현금영수증발급":
-        tmp = '개인회원(비사업자)은 현금영수증 발행이 불가합니다.\n '
-              + '현금영수증 발행을 위해서는 페이앱에서 사업자 등록이 필요합니다.\n ';
+        tmp = '개인회원(비사업자)은 현금영수증 발행이 불가합니다.\n'
+              + '현금영수증 발행을 위해서는 페이앱에서 사업자 등록이 필요합니다.\n';
 
         data = new kakaoEmbed();
         data.addBasicCard()
-            .setCardTitle(tmp)
+            .setCardDescription(tmp)
             .addCardButton('페이앱 바로가기', { action: 'webLink', webLinkUrl: 'http://payappnfc.co.kr' });
 
         result = data.output();
@@ -257,13 +257,13 @@ apiRouter.post('/question_fee', function(req, res) {
 
     switch(context){
       case "수수료절감":
-        tmp = 'PAYAPP Lite에 등록하신 개인(비사업자)회원의 경우 4% 수수료가 일률로 적용됩니다.\n '
-              + '사업자의 경우 매출규모에 따라 수수료가 차등 적용됩니다.\n '
-              + '사업자 등록 후 PAYAPP 서비스를 통해 수수료를 절감해 보세요.\n ';
+        tmp = 'PAYAPP Lite에 등록하신 개인(비사업자)회원의 경우 4% 수수료가 일률로 적용됩니다.\n'
+              + '사업자의 경우 매출규모에 따라 수수료가 차등 적용됩니다.\n'
+              + '사업자 등록 후 PAYAPP 서비스를 통해 수수료를 절감해 보세요.\n';
 
         data = new kakaoEmbed();
         data.addBasicCard()
-            .setCardTitle(tmp)
+            .setCardDescription(tmp)
             .addCardButton('페이앱 바로가기', { action: 'webLink', webLinkUrl: 'http://payappnfc.co.kr' })
 
         result = data.output();
@@ -334,12 +334,14 @@ apiRouter.post('/question_etc', function(req, res) {
 
 
     switch(context){
-      case "정산일자":
-        tmp = '구매자의 카드 결제 후 익일부터 영업일로 5일째 되는날 정산(입금)이 진행됩니다.\n'
-            + '주말,공휴일이 포함된 경우 해당 일수 만큼 정산일이 미뤄집니다.\n';
+      case "유의업종":
+        tmp = '이용에 제한이 있는 업종의 경우 아래 URL에서 확인이 가능합니다.\n'
 
         data = new kakaoEmbed();
-        data.addText(tmp);
+        data.addBasicCard()
+            .setCardDescription(tmp)
+            .addCardButton('유의업종 리스트', { action: 'webLink', webLinkUrl: 'https://www.payapplite.com/faq?detailType=ETC' })
+
         result = data.output();
         break;
 
@@ -353,13 +355,14 @@ apiRouter.post('/question_etc', function(req, res) {
 
     switch(context){
       case "사업자전환":
-        tmp = '개인에서 사업자로 변경은 불가능하며 신규 가입만 가능합니다.\n '
-              + '사업자의 경우 매출규모에 따라 수수료가 차등 적용됩니다.\n '
-              + '사업자 등록 후 PAYAPP 서비스를 통해 수수료를 절감해 보세요.\n ';
+        tmp = '개인에서 사업자로 변경은 불가능하며 신규 가입만 가능합니다.\n'
+              + '사업자의 경우 매출규모에 따라 수수료가 차등 적용됩니다.\n'
+              + '사업자 등록 후 PAYAPP 서비스를 통해 수수료를 절감해 보세요.\n';
 
         data = new kakaoEmbed();
         data.addBasicCard()
-            .setCardTitle(tmp)
+            //.setCardTitle('사업자전환')
+            .setCardDescription(tmp)
             .addCardButton('페이앱 바로가기', { action: 'webLink', webLinkUrl: 'http://payappnfc.co.kr' })
 
         result = data.output();
