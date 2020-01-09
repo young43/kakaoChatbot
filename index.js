@@ -317,6 +317,65 @@ apiRouter.post('/question_calculate', function(req, res) {
 });
 
 
+// question_etc : 기타 관련된 문의 사항 처리
+apiRouter.post('/question_etc', function(req, res) {
+  // 카카오 오픈빌더 question스킬에 등록된 'contexts' 파라미터를 post방식으로 가져옴.
+  var intent = req.body.action.params['intent'];
+  var result = null;
+  var tmp = "";
+
+  //console.log(req.body.action);
+  let data = new kakaoEmbed();
+  data.addText("이해하지 못했습니다.");
+  result = data.output();
+
+  if(intent == "what"){
+    var context = req.body.action.params['context'];
+
+
+    switch(context){
+      case "정산일자":
+        tmp = '구매자의 카드 결제 후 익일부터 영업일로 5일째 되는날 정산(입금)이 진행됩니다.\n'
+            + '주말,공휴일이 포함된 경우 해당 일수 만큼 정산일이 미뤄집니다.\n';
+
+        data = new kakaoEmbed();
+        data.addText(tmp);
+        result = data.output();
+        break;
+
+      default:
+        break;
+    }
+
+  }else if(intent == "how"){
+    var context = req.body.action.params['context'];
+
+
+    switch(context){
+      case "사업자전환":
+        tmp = '개인에서 사업자로 변경은 불가능하며 신규 가입만 가능합니다.\n '
+              + '사업자의 경우 매출규모에 따라 수수료가 차등 적용됩니다.\n '
+              + '사업자 등록 후 PAYAPP 서비스를 통해 수수료를 절감해 보세요.\n ';
+
+        data = new kakaoEmbed();
+        data.addBasicCard()
+            .setCardTitle(tmp)
+            .addCardButton('페이앱 바로가기', { action: 'webLink', webLinkUrl: 'http://payappnfc.co.kr' })
+
+        result = data.output();
+        break;
+
+      default:
+        break;
+    }
+
+  }
+  //console.log(result);
+
+  res.status(200).send(result);
+});
+
+
 
 // 서버 실행
 app.listen(3000, function() {
